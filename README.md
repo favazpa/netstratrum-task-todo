@@ -1,5 +1,8 @@
 
-# Task Manager - React Native
+# Task Manager - React Native!![Simulator Screenshot - iPhone 14 Pro - 2023-08-18 at 12 39 59](https://github.com/favazpa/netstratrum-task-todo/assets/85933108/9952b69a-785e-4b94-a0ac-e075a9f66bd6)
+[Simulator Screenshot - iPhone 14 Pro - 2023-08-18 at![Simulator Screenshot - iPhone 14 Pro - 2023-08-18 at 12 40 13](https://github.com/favazpa/netstratrum-task-todo/assets/85933108/22b2c98d-321c-4135-9226-3a5b902a6524)
+ 12 40 04](https://github.com/favazpa/netstratrum-task-todo/assets/85933108/a26fb24f-1f33-4996-8ada-919e206f85f6)
+
 
 
 Welcome to the React Native Task Manager App! This app provides a simple and intuitive interface for managing your tasks. It includes an onboarding screen, a task adding screen, and a task list screen. With the power of Redux Toolkit for global state management and AsyncStorage for local storage, you can efficiently create, delete, edit, and mark tasks as completed.Also having toast for knowing the status.
