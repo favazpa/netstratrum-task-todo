@@ -1,0 +1,46 @@
+# Node.js
+node_modules/
+npm-debug.log
+
+# macOS
+.DS_Store
+
+# React Native
+ios/Pods/
+android/build/
+android/app/build/
+.idea/
+*.xcworkspace
+*.iml
+.vscode/
+*.log
+
+# Android
+android/gradle.properties
+android/local.properties
+android/.gradle/
+android/captures/
+
+# iOS
+ios/Pods/
+ios/build/
+ios/Podfile.lock
+ios/*.xcworkspace
+ios/xcuserdata/
+ios/*.log
+
+# Compiled files
+*.o
+*.class
+*.pyc
+*.swp
+
+# Gradle Wrapper
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+
+# Generated files
+build/
+android/app/src/main/assets/index.android.bundle
+android/app/src/main/assets/index.android.bundle.meta
+ios/Pods/Manifest.lock
