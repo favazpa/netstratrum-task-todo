@@ -6,7 +6,6 @@ import {
   Dimensions,
   TouchableOpacity,
   Text,
-  Button,
   Platform,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
@@ -14,7 +13,6 @@ import {addTask, editTask} from '../redux/slices/taskSlice';
 import CustomTextInputWithLabel from '../components/CustomTextinputWIthLabel';
 import TaskNameIcon from '../assets/images/TaskName2x.png';
 import DatePickerIcon from '../assets/images/DatePicker.png';
-import CentrePoint from '../assets/images/CentrePoint2x.png';
 import {useRoute} from '@react-navigation/native';
 import colors from '../themes/Colors';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -57,6 +55,7 @@ const AddTaskScreen = () => {
     setValue(task?.status);
     navigation.setOptions({
       headerShown: showHeader,
+      title: task?.title ? 'Edit Task' : 'Add Task',
     });
   }, [navigation, showHeader, task]);
 
@@ -86,7 +85,7 @@ const AddTaskScreen = () => {
       completed: false,
       startDate: selectedStartDate.toString(),
       endDate: selectedEndDate.toString(),
-      status: value,
+      status: value ? value : 'open',
       id: task ? task.id : Date.now(),
     };
     if (title) {
@@ -97,7 +96,7 @@ const AddTaskScreen = () => {
       setSelectedEndDate('');
       navigation.navigate('TaskList');
     } else {
-      showToast('error', 'Please fill task and description');
+      showToast('error', 'Please fill the task');
     }
   };
 
@@ -148,18 +147,7 @@ const AddTaskScreen = () => {
           />
         </View>
 
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="datetime"
-          onConfirm={handleDateTimeConfirm}
-          onCancel={hideDateTimePicker}
-        />
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-          }}>
+        <View style={styles.dropDownContainer}>
           <View>
             <Text style={styles.status}>Status</Text>
             <DropDownPicker
@@ -182,6 +170,13 @@ const AddTaskScreen = () => {
         style={styles.addButtonContainer}>
         <Text style={styles.addButtonText}>Save Task</Text>
       </TouchableOpacity>
+
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="datetime"
+        onConfirm={handleDateTimeConfirm}
+        onCancel={hideDateTimePicker}
+      />
     </KeyboardAwareScrollView>
   );
 };
@@ -232,6 +227,11 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
     fontWeight: '600',
     marginBottom: 5,
+  },
+  dropDownContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
 });
 

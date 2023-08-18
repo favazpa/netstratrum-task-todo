@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,81 +9,33 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {deleteTask} from '../redux/slices/taskSlice';
+import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../themes/Colors';
-import {formatDate} from '../utils/DateUtils';
+import CustomTextInputWithLabel from '../components/CustomTextinputWIthLabel';
+import SearchIcon from '../assets/images/SearchIcon.png';
+import TodoItem from '../components/TodoItem';
 
 const screenWidth = Dimensions.get('window').width;
 
 const TaskListScreen = ({navigation}) => {
-  const dispatch = useDispatch();
+  const [searchText, setSearchText] = useState('');
+  const [searchResult, setSearchResult] = useState(null);
   const tasks = useSelector(state => state.tasks);
 
-  const renderItem = ({item}) => {
-    const startDate = formatDate(item?.startDate);
-    const endDate = formatDate(item?.endDate);
+  useEffect(() => {
+    if (searchText) {
+      let tasksCopy = [...tasks];
+      const filteredTask = tasksCopy.filter((item, index) => {
+        return item.title.toLowerCase().includes(searchText.toLowerCase());
+      });
 
-    console.log('item', item);
-    return (
-      <View style={styles.itemContainer}>
-        <View style={styles.itemHeader}>
-          <Text
-            style={[
-              styles.taskTitle,
-              {
-                textDecorationLine:
-                  item.status === 'closed' ? 'line-through' : null,
-              },
-            ]}>
-            {item.title}
-          </Text>
-          <View style={{flexDirection: 'row'}}>
-            <View
-              style={[
-                styles.statusContainer,
-                {
-                  backgroundColor:
-                    item.status === ('open' || 'progress')
-                      ? '#CAF6C6'
-                      : '#FECCB1',
-                },
-              ]}>
-              <Text
-                style={{
-                  color:
-                    item.status === ('open' || 'progress')
-                      ? '#72966f'
-                      : '#d6825c',
-                }}>
-                {item.status}
-              </Text>
-            </View>
-            <TouchableOpacity
-              style={{marginHorizontal: 5}}
-              onPress={() =>
-                navigation.navigate('AddTask', {task: item, showHeader: true})
-              }>
-              <Icon name="pencil" size={20} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{marginHorizontal: 5}}
-              onPress={() => dispatch(deleteTask(item.id))}>
-              <Icon name="delete" color={'#e0695e'} size={20} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <Text style={styles.taskDescription}>{item.description}</Text>
+      setSearchResult(filteredTask);
+    }
+  }, [searchText]);
 
-        <View style={styles.itemFooterContainer}>
-          <View style={styles.timeContainer}>
-            <Icon name="clock-outline" color={'#9d83e2'} size={15} />
-            <Text style={styles.timeText}>{`${startDate}  ${endDate}`}</Text>
-          </View>
-        </View>
-      </View>
-    );
+  const handleSearch = text => {
+    setSearchText(text);
   };
 
   const renderHeader = () => {
@@ -111,9 +63,14 @@ const TaskListScreen = ({navigation}) => {
           style={styles.ellipseImage}
         />
         <SafeAreaView style={{flex: 1}}>
+          <CustomTextInputWithLabel
+            imageSource={SearchIcon}
+            onChangeText={handleSearch}
+            value={searchText}
+          />
           <FlatList
-            data={tasks}
-            renderItem={renderItem}
+            data={searchText ? searchResult : tasks}
+            renderItem={({item}) => <TodoItem data={item} />}
             keyExtractor={item => item.id.toString()}
             ListHeaderComponent={renderHeader}
             ListEmptyComponent={renderEmptyList}
