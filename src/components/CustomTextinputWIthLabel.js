@@ -36,7 +36,7 @@ const CustomTextInputWithLabel = ({
             value={value}
           />
         ) : (
-          <Text style={style.date}>
+          <Text style={styles.date}>
             {value && formatDate(value?.toString())}
           </Text>
         )}
