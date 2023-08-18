@@ -25,7 +25,7 @@ const TodoItem = ({data}) => {
                 data.status === 'closed' ? 'line-through' : null,
             },
           ]}>
-          {data.title}
+          {data.title.toUpperCase()}
         </Text>
         <View style={{flexDirection: 'row'}}>
           <View
@@ -65,9 +65,20 @@ const TodoItem = ({data}) => {
       <Text style={styles.taskDescription}>{data.description}</Text>
 
       <View style={styles.itemFooterContainer}>
-        <View style={styles.timeContainer}>
-          <Icon name="clock-outline" color={'#9d83e2'} size={15} />
-          <Text style={styles.timeText}>{`${startDate}  ${endDate}`}</Text>
+        <View>
+          <Text style={{color: 'black'}}>Start Date</Text>
+          <View style={styles.timeContainer}>
+            <Icon name="clock-outline" color={'#9d83e2'} size={15} />
+            <Text style={styles.timeText}>{startDate}</Text>
+          </View>
+        </View>
+
+        <View>
+          <Text style={{color: 'black'}}>End Date</Text>
+          <View style={styles.timeContainer}>
+            <Icon name="clock-outline" color={'#9d83e2'} size={15} />
+            <Text style={styles.timeText}>{startDate}</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -111,7 +122,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontWeight: '600',
     marginHorizontal: 5,
-    fontSize: 15,
+    fontSize: 12,
   },
   statusContainer: {
     paddingHorizontal: 10,
